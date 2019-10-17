@@ -63,20 +63,20 @@ def compute_angle_v2v(v1, v2, v3=None):
                                                 measured in radians within [-pi, pi] if v3 is provided
     """
 
+    alpha = math.acos(dot_product(v1, v2) / (vlength(v1)*vlength(v2)))
     if v3 is None:
-        return math.acos(dot_product(v1, v2) / (vlength(v1)*vlength(v2)))
-    else:
-        cross = cross_product(v1, v2)
-        cross.normalize()
-        dot = dot_product(v1, v2)
-        det = dot_product(v3, cross)
-        return math.atan2(det, dot)
+        return alpha
+    cross = cross_product(v2, v1)
+    if dot_product(cross,v3) > 0.0:
+        return 2*math.pi-alpha
+
+    return alpha
 
 
 if __name__ == '__main__':
     a = [1.0, 1.0, 0.0]
     b = [1.0, -1.0, 0.0]
     c = [0.0, 0.0, 1.0]
-    print(compute_angle_v2v(a,b))
-    print(compute_angle_v2v(a,b,c))
-    print(compute_angle_v2v(b, a, c))
+    print(math.degrees(compute_angle_v2v(a,b)))
+    print(math.degrees(compute_angle_v2v(a,b,c)))
+    print(math.degrees(compute_angle_v2v(b, a, c)))
