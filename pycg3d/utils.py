@@ -6,12 +6,6 @@ from pycg3d import cg3d_plane
 def vlength(v):
     return math.sqrt(v[0]**2 + v[1]**2 + v[2]**2)
 
-def rad2deg(rad):
-    return rad * 180.0 / math.pi
-
-def deg2rad(deg):
-    return deg * math.pi / 180.0
-
 def distance(p1, p2):
     """
     compute distance between two points
