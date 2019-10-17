@@ -6,6 +6,11 @@ from pycg3d import cg3d_plane
 def vlength(v):
     return math.sqrt(v[0]**2 + v[1]**2 + v[2]**2)
 
+def rad2deg(rad):
+    return rad * 180.0 / math.pi
+
+def deg2rad(deg):
+    return deg * math.pi / 180.0
 
 def distance(p1, p2):
     """
@@ -54,11 +59,29 @@ def mirror_point_to_plane(point, plane):
     return point - 2.0 * ((point - pn) * norm) * norm
 
 
-def compute_angle_v2v(v1, v2):
+def compute_angle_v2v(v1, v2, v3=None):
     """
     compute angle between two vectors, measured in radians within [0, pi]
     :param v1: Vector 1
     :param v2: Vector 2
-    :return: angle between Vectors v1 and v2, measured in radians within [0, pi]
+    :param v3: Vector 3. User defined normal direction of the two vectors
+    :return: angle between Vectors v1 and v2, measured in radians within [0, pi] if v3 is not provided
+                                                measured in radians within [-pi, pi] if v3 is provided
     """
-    return math.acos(dot_product(v1, v2) / (vlength(v1)*vlength(v2)))
+
+    if v3 is None:
+        return math.acos(dot_product(v1, v2) / (vlength(v1)*vlength(v2)))
+    else:
+        cross = cross_product(v1, v2)
+        dot = dot_product(v1, v2)
+        det = dot_product(v3, cross)
+        return math.atan2(det, dot)
+
+
+if __name__ == '__main__':
+    a = [1.0, 1.0, 0.0]
+    b = [1.0, -1.0, 0.0]
+    c = [0.0, 0.0, 1.0]
+    print(compute_angle_v2v(a,b))
+    print(compute_angle_v2v(a,b,c))
+    print(compute_angle_v2v(b, a, c))
