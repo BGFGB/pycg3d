@@ -67,10 +67,9 @@ def compute_angle_v2v(v1, v2, v3=None):
         return math.acos(dot_product(v1, v2) / (vlength(v1)*vlength(v2)))
     else:
         cross = cross_product(v1, v2)
+        cross.normalize()
         dot = dot_product(v1, v2)
-        n = cg3d_vector.CG3dVector(cross[0], cross[1], cross[2])
-        n.normalize()
-        det = dot_product(v3, n)
+        det = dot_product(v3, cross)
         return math.atan2(det, dot)
 
 
