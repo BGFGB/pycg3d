@@ -64,11 +64,10 @@ def compute_angle_v2v(v1, v2, v3=None):
     """
 
     alpha = math.acos(dot_product(v1, v2) / (vlength(v1)*vlength(v2)))
-    if v3 is None:
-        return alpha
-    cross = cross_product(v2, v1)
-    if dot_product(cross,v3) > 0.0:
-        return 2*math.pi-alpha
+    if v3 is not None:
+        cross = cross_product(v2, v1)
+        if dot_product(cross,v3) > 0.0:
+            return 2*math.pi-alpha
 
     return alpha
 
